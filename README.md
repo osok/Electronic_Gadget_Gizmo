@@ -1,8 +1,9 @@
 #Idea
 Create box that puzzles those that inquire.  
 With the exception of a few rules make it such that even though it's open source it's still challenging.
-Consider that others might write how to's, to defeat it.  Shameful as it might be, reading it would be more so. :-)
-Importantly, they should not be able to give away the proof that one has defeated it, 
+
+Considering that others might write how to's, to defeat it.  Shameful as it might be, reading it would be more so. :-)
+Its important that any how to can at most give hints and not the actual flag, 
 only provide some assistance for the weak minded that cannot handle the challenge.
 
 #Levels of play
@@ -39,6 +40,11 @@ With out giving away what's inside (I guess you could look at the code or eagle 
 * I wanted to code multiple devices on SPI and I2C bus
 * I wanted to provide a fun tool that could be used to educate, challenge and expose people to new ways of thinking
 * I also wanted to frustrate those that could not or would not "Try Harder"
+
+#Rules
+*You cannot cut, drill use hot gun, heat source or any other means to gain access into the box, until the flag is reach that says you can open it.  It is Not locked.
+*You cannot drill out the screws or buttons.
+*When you get to "That Point" (You know which one I means).  Don't throw, smash, crush, incinerate or otherwise destroy the box
 
 
 
