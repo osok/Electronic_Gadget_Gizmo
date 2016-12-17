@@ -1,15 +1,17 @@
 #Idea
-Create box that puzzles those that inquire.  
+Create box, that puzzles, those that inquire.  
 With the exception of a few rules make it such that even though it's open source it's still challenging.
 
-Considering that others might write how to's, to defeat it.  Shameful as it might be, reading it would be more so. :-)
-Its important that any how to can at most give hints and not the actual flag, 
+Also give consideration to the fact that others, might write how-to's to defeat it.  Shameful as it might be, reading it would be more so. :-)
+Its important that any how-to, can at most give hints, and not the actual flag, 
 only provide some assistance for the weak minded that cannot handle the challenge.
 
 #Levels of play
+You decide what level you want to play at.
+
 * Super l33t - Tell me nothing, don't even let me on this site
-* Expert - Let me know what's on this page
-* Script Kiddie - Let me look around this site
+* Expert - Let me know what's on this page (See just that little bit of curiosity kept you from being Super l33t.  Ok, I guess you had to get the rules somehow.  So Super l33t and Expert can  read this page.  Super l33t completes the challenge the fastest.  We'll have to sort that out as time progresses.
+* Script Kiddie - Let me look around this site a little
 * N00b - Let me look for a cheat-sheet or ask someone (Still not going to solve it for you)
 
 Yes, even if you solve the entire box, if you used cheat-sheets then you're still a N00b, not even rising to the elvel of Script Kiddie.
@@ -38,6 +40,7 @@ With out giving away what's inside (I guess you could look at the code or eagle 
 * I wanted to figure out GitHub (I'm an old school programmer, like 8 years since I did team development)
 * I wanted to build some Arduino Libraries for some of the code I already wrote and use it in the project
 * I wanted to code multiple devices on SPI and I2C bus
+* I wanted to write it on ESP2866 platform
 * I wanted to provide a fun tool that could be used to educate, challenge and expose people to new ways of thinking
 * I also wanted to frustrate those that could not or would not "Try Harder"
 
