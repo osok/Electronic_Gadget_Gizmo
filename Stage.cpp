@@ -1,5 +1,5 @@
 /**
- * Stage.h - This is a base class for the Stages included in the Flags.
+ * Stage.cpp - This is a base class for the Stages included in the Flags.
  * Created by osok
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */

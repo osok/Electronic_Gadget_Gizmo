@@ -9,7 +9,7 @@
 
 #include <Arduino.h>
 
-// This just seemed a good maximum, I"ll change it if I need more
+// This just seemed a good maximum, I'll change it if I need more
 #define MAX_OUTPUT_LINES 6
 
 // This values are set to the legnths os the LCD screen I'm using
