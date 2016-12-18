@@ -8,6 +8,7 @@
 #define Stage_h
 
 #include <Arduino.h>
+#include "Box.h"
 
 // This just seemed a good maximum, I'll change it if I need more
 #define MAX_OUTPUT_LINES 6
@@ -18,6 +19,7 @@
 class Stage{
   private:
     int _id;
+    Box* _box;
     char _EMPTY[MAX_OUTPUT_LINE_LENGTH];
     char _output[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
     char _error[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
@@ -29,11 +31,14 @@ class Stage{
     void resetError();
 
   protected:
+    char* createEmptyBuffer();
+    char* createBufferFromString(char* string);
     void addOutput(char output[MAX_OUTPUT_LINE_LENGTH]);
     void addError(char output[MAX_OUTPUT_LINE_LENGTH]);
+    Box* getBox();
     
   public:
-    Stage(int id);  
+    Stage(int id, Box* box);  
     char* getOutput(int line);
     char* getError(int line);
     boolean doesOutputExist();
@@ -43,6 +48,7 @@ class Stage{
     void setInput(char* input);
 
     // Must be implemented by implementation class
+    void virtual setup();
     boolean virtual process();
     
 

@@ -12,16 +12,33 @@
 
 #define FLAGONE_MAX_FAILED_ATTEMPTS 10
 
-void FlagOne::setupStages(){
-  StageCoinFlip coinFlipStage1(STAGE_ID_ONE);
-  StageCoinFlip coinFlipStage2(STAGE_ID_TWO);
-  StageCoinFlip coinFlipStage3(STAGE_ID_THREE);
+void FlagOne::setup(){
+  StageCoinFlip coinFlipStage1(STAGE_ID_ONE, getBox());
+  StageCoinFlip coinFlipStage2(STAGE_ID_TWO, getBox());
+  StageCoinFlip coinFlipStage3(STAGE_ID_THREE, getBox());
 
   addStage(STAGE_ID_ONE, &coinFlipStage1); 
   addStage(STAGE_ID_TWO, &coinFlipStage2); 
   addStage(STAGE_ID_THREE, &coinFlipStage3); 
   
   changeMaxFailedAttempts(FLAGONE_MAX_FAILED_ATTEMPTS);
+  
+}
+
+
+boolean FlagOne::process(){
+  Stage* currentStage;
+  
+  while(!allStagesComplete()){
+    currentStage = getCurrentStage();
+    currentStage->setup();
+
+    if(currentStage->process()){
+      stageCompleted();
+    }else{
+      addFailedAttempt();
+    }
+  }
   
 }
 

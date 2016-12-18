@@ -14,8 +14,23 @@
 
 #include "StageCoinFlip.h"
 
+void StageCoinFlip::setup(){
+  char* buffer;
+
+  buffer = createBufferFromString("Coin Flip");
+  addOutput(buffer);
+  buffer = createBufferFromString("Press A or B");
+  addOutput(buffer);
+  buffer = createEmptyBuffer();
+  addOutput(buffer);
+  
+}
+
+
+
 boolean StageCoinFlip::process(){
-  // TODO: Code game here
+
+  
   return 1;
 }
 

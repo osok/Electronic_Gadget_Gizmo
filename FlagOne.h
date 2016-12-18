@@ -15,7 +15,11 @@
 
 class FlagOne: public Flag{
   protected:
-    void setupStages();  
+
+   public:
+    FlagOne(int id, Box* box) : Flag(id, box){};  //Calls the parent constructor
+    void setup();
+    boolean process();
 
 };
 

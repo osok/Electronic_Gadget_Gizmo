@@ -9,14 +9,32 @@
 #define Game_h
 
 #include <Arduino.h>
+#include "Box.h"
 #include "Flag.h"
-#include "Stage.h"
 
+#define FLAG_ONE 1
+#define FLAG_TWO 2
+#define FLAG_THREE 3
+#define FLAG_FOUR 4
+#define FLAG_FIVE 5
+#define FLAG_COUNT 5
 
 class Game{
-  
+  private:
+    Box _box;   
+    Flag* _flags[FLAG_COUNT];
+    int _currentFlagId = 0;
 
-
+  protected:
+    void addFlag(int flagId, Flag* flag);
+    Box* getBox();
+    
+  public:
+    Game();
+    void setup();
+    void run();
+    void setCurrentFlag(int flagId);
+    Flag* getCurrentFlag();
 
 };
 

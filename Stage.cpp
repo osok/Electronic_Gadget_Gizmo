@@ -6,12 +6,27 @@
 #include "Stage.h"
 
 
-Stage::Stage(int id){
+//These need to be here, but should not be populated
+// the concrete classes will implement them.
+// Not having them cause a linking error
+// "undefined reference to `vtable for"
+// Define any virtual functions with empty bodies
+void Stage::setup(){}
+boolean Stage::process(){}
+
+
+
+Stage::Stage(int id, Box* box){
   _id = id;  
+  _box = box;
 
   for(int c = 0; c < MAX_OUTPUT_LINE_LENGTH; c++){
     _EMPTY[c] = ' ';
   }
+}
+
+Box* Stage::getBox(){
+  return _box;
 }
 
 void Stage::resetOutput(){
@@ -57,6 +72,17 @@ boolean Stage::doesOutputExist(){
 boolean Stage::doesErrorExist(){
   return _errorCount>0;
 }
+char* Stage::createEmptyBuffer(){
+  char buffer[MAX_OUTPUT_LINE_LENGTH];
+  strncpy(buffer, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
+  return buffer;
+}
+
+char* Stage::createBufferFromString(char* string){
+  char buffer[MAX_OUTPUT_LINE_LENGTH];
+  strncpy(buffer, string, MAX_OUTPUT_LINE_LENGTH);
+  return buffer;
+}
 
 void Stage::setInput(char* input){
   strncpy(_input, input, MAX_OUTPUT_LINE_LENGTH);
@@ -79,6 +105,7 @@ void Stage::addError(char error[MAX_OUTPUT_LINE_LENGTH]){
   }
   
 }
+
 
 
 

@@ -9,6 +9,7 @@
 
 #include <Arduino.h>
 #include "Stage.h"
+#include "Box.h"
 
 #define FLAG_NOT_COMPLETE "Keep Trying"
 
@@ -20,6 +21,7 @@
 class Flag{
   private:
     int _id = 0;
+    Box* _box;
     int _failedAttempts = 0;
     int _failedAttemptMax = 10;
     Stage* _stage[MAX_STAGE_COUNT];
@@ -28,18 +30,20 @@ class Flag{
   protected:
     void changeMaxFailedAttempts(int max);
     void addStage(int stageId, Stage* stage);
-
-    //Must be defined in implementing class
-    void virtual setupStages();
+    void stageCompleted();
+    void addFailedAttempt();
+    Box* getBox();
 
   public:
-    Flag(int id);
-    void addFailedAttempt();
+    Flag(int id, Box* box);
     boolean tooManyFailedAttempts();
     Stage* getCurrentStage();
-    void stageCompleted();
     boolean allStagesComplete();
-    char* getFlag();
+    char* getFlagString();
+
+     //Must be defined in implementing class  True is completed, False is Failed
+    void virtual setup();
+    boolean virtual process();
 
 };
 

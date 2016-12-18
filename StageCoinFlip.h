@@ -18,8 +18,13 @@
 #include "Stage.h"
 
 class StageCoinFlip: public Stage{
+  private:
+    boolean _outcome;
+    
+
   public:
-    StageCoinFlip(int id) : Stage(id){};  //Calls the parent constructor
+    StageCoinFlip(int id, Box* box) : Stage(id, box){};  //Calls the parent constructor
+    void setup();
     boolean process();
 };
 

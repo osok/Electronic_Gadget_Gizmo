@@ -7,13 +7,32 @@
 #include "Flag.h"
 
 
-Flag::Flag(int id){
+//These need to be here, but should not be populated
+// the concrete classes will implement them.
+// Not having them cause a linking error
+// "undefined reference to `vtable for"
+// Define any virtual functions with empty bodies
+void Flag::setup(){}
+boolean Flag::process(){}
+
+
+Flag::Flag(int id, Box* box){
   _id = id;
+  _box = box;
   
 }
+Box* Flag::getBox(){
+  return _box;
+}
+
+
 
 void Flag::addFailedAttempt(){
   _failedAttempts++;
+
+  
+  //TODO: Write to EEPROM
+
 }
 
 boolean Flag::tooManyFailedAttempts(){
@@ -40,13 +59,15 @@ Stage* Flag::getCurrentStage(){
 
 void Flag::stageCompleted(){
   _currentStage++;
+
+  //TODO: Write to EEPROM
 }
 
 boolean Flag::allStagesComplete(){
   return _currentStage >= MAX_STAGE_COUNT;
 }
 
-char* Flag::getFlag(){
+char* Flag::getFlagString(){
   if(allStagesComplete()){
     
   }else{
