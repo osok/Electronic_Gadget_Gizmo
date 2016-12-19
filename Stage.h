@@ -10,17 +10,11 @@
 #include <Arduino.h>
 #include "Box.h"
 
-// This just seemed a good maximum, I'll change it if I need more
-#define MAX_OUTPUT_LINES 6
-
-// This values are set to the legnths os the LCD screen I'm using
-#define MAX_OUTPUT_LINE_LENGTH 12
 
 class Stage{
   private:
     int _id;
     Box* _box;
-    char _EMPTY[MAX_OUTPUT_LINE_LENGTH];
     char _output[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
     char _error[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
     char _input[MAX_OUTPUT_LINE_LENGTH];
@@ -31,8 +25,6 @@ class Stage{
     void resetError();
 
   protected:
-    char* createEmptyBuffer();
-    char* createBufferFromString(char* string);
     void addOutput(char output[MAX_OUTPUT_LINE_LENGTH]);
     void addError(char output[MAX_OUTPUT_LINE_LENGTH]);
     Box* getBox();

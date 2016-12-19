@@ -17,11 +17,11 @@
 void StageCoinFlip::setup(){
   char* buffer;
 
-  buffer = createBufferFromString("Coin Flip");
+  buffer = getBox()->createBufferFromString("Coin Flip");
   addOutput(buffer);
-  buffer = createBufferFromString("Press A or B");
+  buffer = getBox()->createBufferFromString("Press A or B");
   addOutput(buffer);
-  buffer = createEmptyBuffer();
+  buffer = getBox()->createEmptyBuffer();
   addOutput(buffer);
   
 }

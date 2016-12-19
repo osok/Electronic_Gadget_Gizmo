@@ -20,9 +20,6 @@ Stage::Stage(int id, Box* box){
   _id = id;  
   _box = box;
 
-  for(int c = 0; c < MAX_OUTPUT_LINE_LENGTH; c++){
-    _EMPTY[c] = ' ';
-  }
 }
 
 Box* Stage::getBox(){
@@ -32,27 +29,27 @@ Box* Stage::getBox(){
 void Stage::resetOutput(){
   _outputCount = 0;
   for(int r = 0; r < MAX_OUTPUT_LINE_LENGTH; r++){
-    strncpy(_output[r], _EMPTY, MAX_OUTPUT_LINE_LENGTH);
+    strncpy(_output[r], getBox()->getBlankLine(), MAX_OUTPUT_LINE_LENGTH);
   } 
 }
 
 void Stage::resetError(){
   _errorCount = 0;
   for(int r = 0; r < MAX_OUTPUT_LINE_LENGTH; r++){
-    strncpy(_error[r], _EMPTY, MAX_OUTPUT_LINE_LENGTH);
+    strncpy(_error[r], getBox()->getBlankLine(), MAX_OUTPUT_LINE_LENGTH);
   }
 }
 
 char* Stage::getOutput(int line){
   if(line < 0 or line>=MAX_OUTPUT_LINES){
-    return _EMPTY;
+    return getBox()->getBlankLine();
   }
   return _output[line];
 }
 
 char* Stage::getError(int line){
   if(line < 0 or line >=MAX_OUTPUT_LINES){
-    return _EMPTY;
+    return getBox()->getBlankLine();
   }
   return _error[line];
 }
@@ -71,17 +68,6 @@ boolean Stage::doesOutputExist(){
 
 boolean Stage::doesErrorExist(){
   return _errorCount>0;
-}
-char* Stage::createEmptyBuffer(){
-  char buffer[MAX_OUTPUT_LINE_LENGTH];
-  strncpy(buffer, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-  return buffer;
-}
-
-char* Stage::createBufferFromString(char* string){
-  char buffer[MAX_OUTPUT_LINE_LENGTH];
-  strncpy(buffer, string, MAX_OUTPUT_LINE_LENGTH);
-  return buffer;
 }
 
 void Stage::setInput(char* input){

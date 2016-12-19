@@ -12,11 +12,37 @@
 
 #include <Arduino.h>
 
+#define MAX_OUTPUT_LINES 3
+
+#define MAX_OUTPUT_LINE_LENGTH 12
 
 
 class Box{
+  private:
+    char _EMPTY[MAX_OUTPUT_LINE_LENGTH];
+    
+    int _currentOutPutLine = 0;
+    char _title[MAX_OUTPUT_LINE_LENGTH];
+    char _output[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
+    char _userInput[MAX_OUTPUT_LINE_LENGTH];
+    char _status[MAX_OUTPUT_LINE_LENGTH];
+    
+    void setup();
+    void updateUserInput(char* line);
+
   public:
     Box();
+
+    char* createEmptyBuffer();
+    char* createBufferFromString(char* string);
+    char* getBlankLine();
+    
+    void setTitle(char* line);
+    void clearOutput();
+    void writeOutput(char* line);
+    void updateStatus(char* line);
+
+    byte getButtons(int seconds);
     
 };
 
