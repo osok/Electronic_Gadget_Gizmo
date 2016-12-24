@@ -76,5 +76,12 @@ char* Flag::getFlagString(){
 }
 
 
+void Flag::setCurrentStageId(int stageId){
+  if(stageId >= 0 && stageId < MAX_STAGE_COUNT){
+    _currentStage = stageId;
+  }
+
+  
+}
 
 

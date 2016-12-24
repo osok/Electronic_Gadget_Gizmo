@@ -28,13 +28,15 @@ class Game{
   protected:
     void addFlag(int flagId, Flag* flag);
     Box* getBox();
-    
+    Flag* getCurrentFlag();
+   
   public:
     Game();
     void setup();
     void run();
     void setCurrentFlag(int flagId);
-    Flag* getCurrentFlag();
+    void setCurrentStage(int stageId);
+    void setCurrentErrors(int errorCount);
 
 };
 

@@ -43,6 +43,8 @@ class Box{
     void updateStatus(char* line);
 
     byte getButtons(int seconds);
+
+    void paintScreen();
     
 };
 

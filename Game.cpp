@@ -67,4 +67,15 @@ Flag* Game::getCurrentFlag(){
   }
 }
 
+void Game::setCurrentStage(int stageId){
+  if(stageId >= 0 && stageId < MAX_STAGE_COUNT){
+    Flag* flag = getCurrentFlag();
+    flag->setCurrentStageId(stageId);
+  }
+}
+
+void setCurrentErrors(int errorCount){
+  
+}
+
 

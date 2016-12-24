@@ -38,6 +38,7 @@ class Flag{
     Flag(int id, Box* box);
     boolean tooManyFailedAttempts();
     Stage* getCurrentStage();
+    void setCurrentStageId(int stageId);
     boolean allStagesComplete();
     char* getFlagString();
 
