@@ -16,6 +16,7 @@
 
 #include <Arduino.h>
 #include "Stage.h"
+#include "Global.h"
 
 class StageCoinFlip: public Stage{
   private:
@@ -23,7 +24,7 @@ class StageCoinFlip: public Stage{
     
 
   public:
-    StageCoinFlip(int flagId,int stageId) : Stage(flagId, stageId){};  //Calls the parent constructor
+    StageCoinFlip();
     void setup();
     boolean process();
 };

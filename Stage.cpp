@@ -3,23 +3,31 @@
  * Created by osok
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
-#include "Game.h"
 #include "Stage.h"
 
 
-Stage::Stage(int flagId,int stageId){
-  _flagId = flagId;  
-  _stageId = stageId;  
+Stage::Stage(){
   Serial.print("Stage created,");
-  Serial.println(stageId);
 }
 
 int Stage::getFlagId(){
   return _flagId;
 }
 
+void Stage::setFlagId(int flagId){
+  Serial.print("Stage setFlagId = ");
+  Serial.println(flagId);
+  _flagId = flagId;  
+}
+
 int Stage::getStageId(){
   return _stageId;
+}
+
+void Stage::setStageId(int stageId){
+  Serial.print("Stage setStageId = ");
+  Serial.println(stageId);
+   _stageId = stageId;
 }
 
 int Stage::getErrorCount(){

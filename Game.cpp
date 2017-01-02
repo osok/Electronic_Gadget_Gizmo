@@ -8,53 +8,42 @@
 #include "Game.h"
 #include "FlagOne.h"
 
-char xxx[1000];   // This is here because something in box is overwriting the above values TODO: Fix this problem
-Box  _box;
-char zzz[1000];   // This is here because something in box is overwriting the above values TODO: Fix this problem
-
-void printAddress(char* description, void *ptr){
-  Serial.print(description);
-  Serial.print(" = ");
-  Serial.println(uint32_t(ptr), DEC);
-}
-
-Box* getBox(){
-  printAddress("In getBox() Method",&_box); 
-  return &_box;
-}
 
 
 Game::Game(){}
 
 void Game::setup(){
   Serial.println("Game is setting up...");
-  FlagOne flag1(FLAG_ONE);
-  FlagOne flag2(FLAG_TWO);
-  FlagOne flag3(FLAG_THREE);
-  FlagOne flag4(FLAG_FOUR);
-  FlagOne flag5(FLAG_FIVE);
 
-  addFlag(FLAG_ONE, &flag1);
-  addFlag(FLAG_TWO, &flag2);
-  addFlag(FLAG_THREE, &flag3);
-  addFlag(FLAG_FOUR, &flag4);
-  addFlag(FLAG_FIVE, &flag5);
+  FlagOne* flag;
+  NEW(flag,FlagOne)(); 
+  addFlag(FLAG_ONE, flag);
+  printAddress("In Game.setup() flag = ",flag);
+
   
+//  addFlag(FLAG_TWO, &flag2);
+//  addFlag(FLAG_THREE, &flag3);
+//  addFlag(FLAG_FOUR, &flag4);
+//  addFlag(FLAG_FIVE, &flag5);
 }
 
 void Game::run(){
   Serial.println("Game is starting...");
-   printAddress("In Game.run() Method",getBox()); 
+  printAddress("In Game.run() Method",getBox()); 
  
   Flag* currentFlag;
 
   currentFlag = getCurrentFlag();
   Serial.println("Current flag retrieved...");
 
+  printAddress("In Game.run() Method currentFlag address = ",currentFlag); 
+
   if(currentFlag == nullptr){
     Serial.println("Unable to get current flag.");
     return;
   }
+
+  Serial.println("setting up current flag");
   currentFlag->setup();  
   
   if(gameFinished()){
@@ -93,8 +82,9 @@ void Game::addFlag(int flagId, Flag* flag){
   if(flagId >= 0 && flagId < FLAG_COUNT){
     Serial.print("adding flag,  flagId = ");
     Serial.println(flagId);
-    
-    _flags[flagId] = flag;
+    flag->setFlagId(flagId);
+    printAddress("   addFlag flag address = ", flag);
+     _flags[flagId] = flag;
   }
 }
 
@@ -110,7 +100,11 @@ Flag* Game::getCurrentFlag(){
   if(_currentFlagId >= 0 && _currentFlagId < FLAG_COUNT){
     Serial.print("Getting Current flag,  flagId = ");
     Serial.println(_currentFlagId);
-    return _flags[_currentFlagId];
+    Flag* flag = _flags[_currentFlagId];
+    
+    printAddress("   getCurrentFlag flag address = ", flag);
+
+    return flag;
   }
 }
 

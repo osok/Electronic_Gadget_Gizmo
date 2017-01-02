@@ -12,6 +12,8 @@
 
 #include <Arduino.h>
 
+// The defines here cannot go into global because there would be a circular reference
+
 //GPIO Pins, this might need to change to actual pin number
 #define BUTTON_0 0  
 #define BUTTON_1 2   

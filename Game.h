@@ -9,26 +9,24 @@
 #define Game_h
 
 #include <Arduino.h>
+#include "Global.h"
 #include "Box.h"
 #include "Flag.h"
 
-#define FLAG_ONE 0
-#define FLAG_TWO 1
-#define FLAG_THREE 2
-#define FLAG_FOUR 3
-#define FLAG_FIVE 4
-
-#define FLAG_COUNT 5
-
-Box* getBox();
-void printAddress(char* description, void* ptr);
-  
+ 
 class Game{
   private:
-    void addFlag(int flagId, Flag* flag);
     Flag* _flags[FLAG_COUNT];
+//    FlagOne flag1;
+//    FlagOne flag2;
+//    FlagOne flag3;
+//    FlagOne flag4;
+//    FlagOne flag5;
+
     int _currentFlagId = 0;
+    char xxx[1000];
     boolean gameFinished();
+    void addFlag(int flagId, Flag* flag);
     void flagCompleted();
     void flagFailed();
     Flag* getCurrentFlag();

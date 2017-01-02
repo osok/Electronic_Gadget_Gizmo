@@ -11,7 +11,6 @@
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
 
-#include "Game.h"
 #include "StageCoinFlip.h"
 
 void StageCoinFlip::setup(){

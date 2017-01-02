@@ -4,18 +4,20 @@
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
 
-#include "Game.h"
 #include "Flag.h"
 
 void Flag::setup(){
   //Empty must be overridden
 }
 
-Flag::Flag(int flagId){
-  _flagId = flagId;
-  Serial.print("Flag created,  flagId = ");
+Flag::Flag(){
+  Serial.print("Flag created");
+}
+
+void Flag::setFlagId(int flagId){
+  Serial.print("Flag setFlagId,  flagId = ");
   Serial.println(getFlagId());
- 
+  _flagId = flagId;
 }
 
 
@@ -92,6 +94,10 @@ void Flag::addStage(int stageId, Stage* stage){
     Serial.print(getFlagId());
     Serial.print(", stageId = ");
     Serial.println(stageId);
+    
+    stage->setFlagId(getFlagId());
+    stage->setStageId(stageId);
+    
     _stage[stageId] = stage;
   }
 }

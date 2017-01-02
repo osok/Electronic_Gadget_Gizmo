@@ -9,6 +9,7 @@
 
 #include <Arduino.h>
 #include "Box.h"
+#include "Global.h"
 
 
 class Stage{
@@ -20,6 +21,7 @@ class Stage{
     char _input[MAX_OUTPUT_LINE_LENGTH];
     int _outputCount = 0;
     int _errorCount = 0;
+    char xxx[1000];
 
     void resetOutput();
     void resetError();
@@ -31,8 +33,10 @@ class Stage{
     int getErrorCount();
     
   public:
-    Stage(int flagId,int stageId);  
+    Stage();  
     int getStageId();
+    void setFlagId(int flagId);
+    void setStageId(int stageId);
     char* getOutput(int line);
     char* getError(int line);
     boolean doesOutputExist();

@@ -12,11 +12,21 @@
 
 #include <Arduino.h>
 #include "Flag.h"
+#include "StageCoinFlip.h"
 
 class FlagOne: public Flag{
 
-   public:
-    FlagOne(int flagId) : Flag(flagId){};  //Calls the parent constructor
+  private:
+    /** These are only here to reserve the memory for them
+     *  they should always be reference from the Flags stages
+     *  pointer array.
+     */
+    StageCoinFlip coinFlipStage1;
+    StageCoinFlip coinFlipStage2;
+    StageCoinFlip coinFlipStage3;
+
+  public:
+    FlagOne();  
     void virtual setup(); 
 };
 
