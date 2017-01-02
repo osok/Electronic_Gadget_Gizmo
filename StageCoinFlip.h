@@ -23,7 +23,7 @@ class StageCoinFlip: public Stage{
     
 
   public:
-    StageCoinFlip(int id, Box* box) : Stage(id, box){};  //Calls the parent constructor
+    StageCoinFlip(int flagId,int stageId) : Stage(flagId, stageId){};  //Calls the parent constructor
     void setup();
     boolean process();
 };

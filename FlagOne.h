@@ -14,13 +14,10 @@
 #include "Flag.h"
 
 class FlagOne: public Flag{
-  protected:
 
    public:
-    FlagOne(int id, Box* box) : Flag(id, box){};  //Calls the parent constructor
-    void setup();
-    boolean process();
-
+    FlagOne(int flagId) : Flag(flagId){};  //Calls the parent constructor
+    void virtual setup(); 
 };
 
 #endif

@@ -13,8 +13,8 @@
 
 class Stage{
   private:
-    int _id;
-    Box* _box;
+    int _flagId;
+    int _stageId;
     char _output[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
     char _error[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
     char _input[MAX_OUTPUT_LINE_LENGTH];
@@ -27,10 +27,12 @@ class Stage{
   protected:
     void addOutput(char output[MAX_OUTPUT_LINE_LENGTH]);
     void addError(char output[MAX_OUTPUT_LINE_LENGTH]);
-    Box* getBox();
+    int getFlagId();
+    int getErrorCount();
     
   public:
-    Stage(int id, Box* box);  
+    Stage(int flagId,int stageId);  
+    int getStageId();
     char* getOutput(int line);
     char* getError(int line);
     boolean doesOutputExist();
@@ -40,8 +42,8 @@ class Stage{
     void setInput(char* input);
 
     // Must be implemented by implementation class
-    void virtual setup();
-    boolean virtual process();
+    void virtual setup(){};
+    boolean virtual process(){};
     
 
 };

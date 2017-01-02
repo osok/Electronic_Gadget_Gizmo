@@ -12,32 +12,63 @@
 
 #include "Box.h"
 
-//GPIO Pins, this might need to change to actual pin number
-#define BUTTON_0 15   
-#define BUTTON_1 2   
-#define BUTTON_2 0  
-#define BUTTON_3 4  
-#define BUTTON_4 5   
-#define BUTTON_5 16   
 
 
-#define TITLE_ROW 0
-#define OUPUT_ROW_START 1
-#define OUPUT_ROW_STOP 3
-#define INPUT_ROW 4
-#define STATUS_ROW 5
-
-#define STATUS_TIME_LEFT "Sec Left:"
 Box::Box(){
+  Serial.println("Box interface object created");
   setup();
 }
 
-void Box::setup(){
-  
-  for(int c = 0; c < MAX_OUTPUT_LINE_LENGTH; c++){
-    _EMPTY[c] = ' ';
-  }
+void Box::printAddresses(){
+//  Serial.println("-----------------------------------------");
+//  Serial.print("Address of _title = ");
+//  Serial.println(uint32_t( _title), DEC);
+//
+//  Serial.print("Address of _currentFlag = ");
+//  Serial.println(uint32_t(_currentFlag), DEC);
+//
+//  Serial.print("Address of _attempts = ");
+//  Serial.println(uint32_t(_attempts), DEC);
+//
+//  Serial.print("Address of _commands = ");
+//  Serial.println(uint32_t(_commands), DEC);
+//
+//  Serial.print("Address of _title = ");
+//  Serial.println(uint32_t(_title), DEC);
+//
+//  Serial.print("Address of _output_1 = ");
+//  Serial.println(uint32_t(_output_1), DEC);
+//
+//  Serial.print("Address of _title = ");
+//  Serial.println(uint32_t(_title), DEC);
+//
+//  Serial.print("Address of _output_2 = ");
+//  Serial.println(uint32_t(_output_2), DEC);
+//
+//  Serial.print("Address of _status = ");
+//  Serial.println(uint32_t(_status), DEC);
+//
+//  Serial.print("Address of _userInput = ");
+//  Serial.println(uint32_t(_userInput), DEC);
+//
+//  Serial.print("Address of _EMPTY = ");
+//  Serial.println(uint32_t(_EMPTY), DEC);
+//
+//  Serial.print("Address of _SEIRAL_BOUNDRY = ");
+//  Serial.println(uint32_t(_SEIRAL_BOUNDRY), DEC); 
+//  
+//  Serial.println("-----------------------------------------");
+//
 
+}
+
+
+
+void Box::setup(){
+  Serial.println("Box interface object setup");
+
+  printAddresses();
+  
   pinMode(BUTTON_0, INPUT);
   pinMode(BUTTON_1, INPUT);
   pinMode(BUTTON_2, INPUT);
@@ -46,15 +77,33 @@ void Box::setup(){
   pinMode(BUTTON_5, INPUT);
 }
 
-char* Box::createEmptyBuffer(){
-  char buffer[MAX_OUTPUT_LINE_LENGTH];
-  strncpy(buffer, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
+char* Box::initBuffer(char* buffer, char c){
+//  Serial.println("initBuffer");
+  printAddresses();
+  int i = 0;
+  for(; i < MAX_OUTPUT_LINE_LENGTH; i++){
+    buffer[i] = c;
+  }
+  buffer[i] = '\0';
+  printAddresses();
   return buffer;
 }
 
-char* Box::createBufferFromString(char* string){
-  char buffer[MAX_OUTPUT_LINE_LENGTH];
-  strncpy(buffer, string, MAX_OUTPUT_LINE_LENGTH);
+char* Box::initAndCopyString(char* buffer, char* string, int max){
+//  Serial.println("initAndCopyString");
+  printAddresses();
+  // This will ensure the null terminator exists at the end
+  if(max > MAX_OUTPUT_LINE_LENGTH){
+    max = MAX_OUTPUT_LINE_LENGTH;
+  }
+  
+  if(max > strlen(string)){
+    max = strlen(string);
+  }
+  
+  buffer = initBuffer(buffer, '\0');
+  strncpy(buffer, string, max);
+  printAddresses();
   return buffer;
 }
 
@@ -64,40 +113,148 @@ char* Box::getBlankLine(){
 
 
 void Box::setTitle(char* line){
-  //First clear the characters on the line, then write the line
-  strncpy(_title, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-  strncpy(_title, line, MAX_OUTPUT_LINE_LENGTH);
+  Serial.println("setTitle");
+  printAddresses();
+  initAndCopyString(_title, line, MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
+}
+
+void Box::setCurrentFlag(int currentFlag, int currentStage){
+  Serial.println("setCurrentFlag");
+  printAddresses();
+  char flag[3];
+  char stage[3];
+
+  char num[10];
+  int addr;
+  
+  
+  initAndCopyString(_currentFlag, CURRENT_FLAG, MAX_OUTPUT_LINE_LENGTH - 5);
+ 
+  if(currentFlag < 10){
+    strcat(_currentFlag, itoa(currentFlag, flag, 10));
+  }else{  
+    strcat(_currentFlag, "?");
+  }  
+  
+  strcat(_currentFlag, " : ");
+  
+  if(currentStage < 10){
+    strcat(_currentFlag, itoa(currentStage, stage, 10));
+  }else{  
+    strcat(_currentFlag, "?");
+  }
+  printAddresses();
+
+}
+
+void Box::setAttempts(int attempts){
+  Serial.println("setAttempts");
+  printAddresses();
+  char num[4];
+
+  initAndCopyString(_attempts, ATTEMPTS, MAX_OUTPUT_LINE_LENGTH - 2);
+
+  if(attempts < 100){
+    strcat(_attempts, itoa(attempts, num, 10));
+  }else{  
+    strcat(_attempts, "??");
+  }  
+   printAddresses();
+ 
+}
+
+void Box::setCommand(char* line){
+  Serial.println("setCommand");
+  printAddresses();
+  initAndCopyString(_commands, line, MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
+
 }
 
 void Box::clearOutput(){
+  Serial.println("clearOutput");
+  printAddresses();
   _currentOutPutLine = 0;
-  for(int i=0; i < MAX_OUTPUT_LINES; i++){
-    strncpy(_output[i], _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-  }
+  initAndCopyString(_output_1, "", MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(_output_2, "", MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
 }
 
-void Box::writeOutput(char* line){
-  if(_currentOutPutLine>=0 && _currentOutPutLine < MAX_OUTPUT_LINES){
-    //First clear the characters on the line, then write the line
-    strncpy(_output[_currentOutPutLine], _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-    strncpy(_output[_currentOutPutLine++], line, MAX_OUTPUT_LINE_LENGTH);
-  }
+void Box::writeOutput(char* line1, char* line2){
+  Serial.println("writeOutput");
+  printAddresses();
+  initAndCopyString(_output_1, line1, MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(_output_2, line2, MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
 }
 
 void Box::updateStatus(char* line){
-  //First clear the characters on the line, then write the line
-  strncpy(_status, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-  strncpy(_status, line, MAX_OUTPUT_LINE_LENGTH);
+  Serial.println("updateStatus");
+  printAddresses();
+  initAndCopyString(_status, line, MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
 }
 
 void Box::updateUserInput(char* line){
-  //First clear the characters on the line, then write the line
-  strncpy(_userInput, _EMPTY, MAX_OUTPUT_LINE_LENGTH);
-  strncpy(_userInput, line, MAX_OUTPUT_LINE_LENGTH);
+  Serial.println("updateUserInput");
+  printAddresses();
+  initAndCopyString(_userInput, line, MAX_OUTPUT_LINE_LENGTH);
+  printAddresses();
 }
 
-void Box::paintScreen(){
+void Box::paintScreen(boolean titleScreen){
+  printAddresses(); 
   
+  Serial.println("");
+  
+  if(titleScreen){
+    Serial.println("Painting Title Screen");
+    Serial.println(_SEIRAL_BOUNDRY);
+    Serial.println(_title);
+    Serial.println(_currentFlag);
+    Serial.println(_attempts);
+    Serial.println(_commands);
+    Serial.println(_SEIRAL_BOUNDRY);
+  }else{
+    Serial.println("Painting User Screen");
+    Serial.println(_SEIRAL_BOUNDRY);
+    Serial.println(_output_1);
+    Serial.println(_output_2);
+    Serial.println(_status);
+    Serial.println(_userInput);
+    Serial.println(_SEIRAL_BOUNDRY);
+  }
+  
+  Serial.println("");
+  
+}
+
+int Box::getButton(){
+
+  while(1){
+    //
+    // Check each input
+    //
+    if( digitalRead(BUTTON_0)){
+      return 0;
+    }
+    if( digitalRead(BUTTON_1)){
+      return 1;
+    }
+    if( digitalRead(BUTTON_2)){
+      return 2;
+    }
+    if( digitalRead(BUTTON_3)){
+      return 3;
+    }
+    if( digitalRead(BUTTON_4)){
+      return 4;
+    }
+    if( digitalRead(BUTTON_5)){
+      return 5;
+    } 
+  }
 }
 
 byte Box::getButtons(int seconds){
@@ -115,11 +272,15 @@ byte Box::getButtons(int seconds){
   char secondsStringBuf[5];
   
   int secondsLeft = seconds;
-  char statusBuffer[MAX_OUTPUT_LINE_LENGTH];
-  char userInputBuffer[MAX_OUTPUT_LINE_LENGTH]; //used to build up buffer
-  char userInput[MAX_OUTPUT_LINE_LENGTH];       // Used to write
+  char* statusBuffer;
+  char* userInputBuffer; //used to build up buffer
+  char* userInput;       // Used to write
   
-  strncpy(userInput, createEmptyBuffer(), MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(userInput, "", MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(userInputBuffer, "", MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(statusBuffer, "", MAX_OUTPUT_LINE_LENGTH);
+
+  
   userInputBuffer[0] = '>';
   
   int bit = 0;
@@ -182,7 +343,7 @@ byte Box::getButtons(int seconds){
     //
     // Update User Input Line
     //
-    strncpy(userInput, userInputBuffer, MAX_OUTPUT_LINE_LENGTH);
+    initAndCopyString(userInput, "", MAX_OUTPUT_LINE_LENGTH);
 
     //
     // Caculate seconds left
@@ -192,7 +353,8 @@ byte Box::getButtons(int seconds){
     //
     //Update Status
     //
-    strcpy(statusBuffer, STATUS_TIME_LEFT);
+    initAndCopyString(statusBuffer, STATUS_TIME_LEFT, strlen(STATUS_TIME_LEFT));
+
     if(secondsLeft <10){
       strcat(statusBuffer, "  ");
     }else{

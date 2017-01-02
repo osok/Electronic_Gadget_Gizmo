@@ -21,7 +21,7 @@ class Util {
     Util();
     int getRandomNumber(int lower, int upper);
     char* getRandomString(int length);
-    
+    void wait(int seconds);
 };
 
 

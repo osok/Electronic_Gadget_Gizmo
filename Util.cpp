@@ -21,3 +21,16 @@ int Util::getRandomNumber(int lower, int upper){
   return (num + lower);
 }
 
+void Util::wait(int seconds){
+  Serial.println("");
+  Serial.print("Waiting (");
+  Serial.print(seconds);
+  Serial.print(" seconds) ");
+  for(int i=0; i<seconds; i++){
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.println("");
+  
+}
+

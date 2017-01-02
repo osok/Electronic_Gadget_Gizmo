@@ -3,27 +3,27 @@
  * Created by osok
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
+#include "Game.h"
 #include "Stage.h"
 
 
-//These need to be here, but should not be populated
-// the concrete classes will implement them.
-// Not having them cause a linking error
-// "undefined reference to `vtable for"
-// Define any virtual functions with empty bodies
-void Stage::setup(){}
-boolean Stage::process(){}
-
-
-
-Stage::Stage(int id, Box* box){
-  _id = id;  
-  _box = box;
-
+Stage::Stage(int flagId,int stageId){
+  _flagId = flagId;  
+  _stageId = stageId;  
+  Serial.print("Stage created,");
+  Serial.println(stageId);
 }
 
-Box* Stage::getBox(){
-  return _box;
+int Stage::getFlagId(){
+  return _flagId;
+}
+
+int Stage::getStageId(){
+  return _stageId;
+}
+
+int Stage::getErrorCount(){
+  return _errorCount;
 }
 
 void Stage::resetOutput(){

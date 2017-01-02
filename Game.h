@@ -12,24 +12,27 @@
 #include "Box.h"
 #include "Flag.h"
 
-#define FLAG_ONE 1
-#define FLAG_TWO 2
-#define FLAG_THREE 3
-#define FLAG_FOUR 4
-#define FLAG_FIVE 5
+#define FLAG_ONE 0
+#define FLAG_TWO 1
+#define FLAG_THREE 2
+#define FLAG_FOUR 3
+#define FLAG_FIVE 4
+
 #define FLAG_COUNT 5
 
+Box* getBox();
+void printAddress(char* description, void* ptr);
+  
 class Game{
   private:
-    Box _box;   
+    void addFlag(int flagId, Flag* flag);
     Flag* _flags[FLAG_COUNT];
     int _currentFlagId = 0;
-
-  protected:
-    void addFlag(int flagId, Flag* flag);
-    Box* getBox();
+    boolean gameFinished();
+    void flagCompleted();
+    void flagFailed();
     Flag* getCurrentFlag();
-   
+           
   public:
     Game();
     void setup();

@@ -18,10 +18,11 @@
 #define STAGE_ID_THREE 2
 #define MAX_STAGE_COUNT 3
 
+#define TITLE_SCREEN_SHOW_SECONDS 5
+
 class Flag{
   private:
-    int _id = 0;
-    Box* _box;
+    int _flagId = 0;
     int _failedAttempts = 0;
     int _failedAttemptMax = 10;
     Stage* _stage[MAX_STAGE_COUNT];
@@ -30,22 +31,22 @@ class Flag{
   protected:
     void changeMaxFailedAttempts(int max);
     void addStage(int stageId, Stage* stage);
+    int getFlagId();
     void stageCompleted();
     void addFailedAttempt();
-    Box* getBox();
 
   public:
-    Flag(int id, Box* box);
+    Flag(int flagId);
     boolean tooManyFailedAttempts();
     Stage* getCurrentStage();
     void setCurrentStageId(int stageId);
     boolean allStagesComplete();
     char* getFlagString();
+    boolean  process();
+    void setFailedAttempts(int attempts);
 
      //Must be defined in implementing class  True is completed, False is Failed
-    void virtual setup();
-    boolean virtual process();
-
+    void virtual setup(); 
 };
 
 
