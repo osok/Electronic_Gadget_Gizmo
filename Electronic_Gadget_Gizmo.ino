@@ -1,5 +1,5 @@
 
-#include "Util.h"
+#include "Global.h"
 #include "Game.h"
 //#include <ESP8266WiFi.h>
 //#include <ESP8266mDNS.h>
@@ -15,7 +15,7 @@ const char* ssid = "Test-Net";
 const char* password = "PleaseStayOffMyWiFi";
 
 Game _game;
-Util util;
+
 
 boolean wifiConnected = false;
 
@@ -25,13 +25,13 @@ void setup() {
   Serial.println("");
   Serial.print("Booting");
   
-  util.wait(5);
+  wait(5);
 
   
 //  WiFi.mode(WIFI_STA);
 //  WiFi.begin(ssid, password);
 //
-//  util.wait(5);
+//  wait(5);
 //  
 //  if (WiFi.waitForConnectResult() == WL_CONNECTED) {
 //    wifiConnected = true;
