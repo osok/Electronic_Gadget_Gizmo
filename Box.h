@@ -41,8 +41,6 @@
 #define MAX_OUTPUT_LINE_LENGTH 20
 
 #define STATUS_TIME_LEFT "Seconds Left: "
-#define CURRENT_FLAG     "Current Flag: "
-#define ATTEMPTS         "Attempts    : "
 
 
 class Box{
@@ -80,14 +78,16 @@ class Box{
     
     void setTitle(char* line);
     void setCurrentFlag(int currentFlag, int currentStage);
-    void setAttempts(int attempts);
+    void setAttempts(int attempts, int maxAttempts);
     void setCommand(char* line);
 
+    void clearUserInput();
     void clearOutput();
     void writeOutput(char* line1, char* line2);
     void updateStatus(char* line);
 
     byte getButtons(int seconds);
+    int getButton(boolean useButtons[6], char* labels[6]);
     int getButton();
 
     void paintScreen(boolean titleScreen);

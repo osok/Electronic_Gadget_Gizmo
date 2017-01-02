@@ -27,6 +27,7 @@ class StageCoinFlip: public Stage{
     StageCoinFlip();
     void setup();
     boolean process();
+    char* getTitle();
 };
 
 #endif

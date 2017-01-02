@@ -24,7 +24,6 @@ class Game{
     FlagOne flag5;
 
     int _currentFlagId = 0;
-    char xxx[1000];
     boolean gameFinished();
     void addFlag(int flagId, Flag* flag);
     void flagCompleted();

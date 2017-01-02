@@ -30,13 +30,19 @@ void Game::setup(){
 void Game::run(){
   Serial.println("Game is starting...");
   printAddress("In Game.run() Method",getBox()); 
- 
-  Flag* currentFlag;
 
+  if(gameFinished()){
+    Serial.println("Game finished.");
+    wait(3);
+    return;
+  }else{
+    Serial.println("The game is not yet finished.");
+  }
+
+  Flag* currentFlag;
   currentFlag = getCurrentFlag();
   Serial.println("Current flag retrieved...");
 
-  printAddress("In Game.run() Method currentFlag address = ",currentFlag); 
 
   if(currentFlag == nullptr){
     Serial.println("Unable to get current flag.");
@@ -46,12 +52,6 @@ void Game::run(){
   Serial.println("setting up current flag");
   currentFlag->setup();  
   
-  if(gameFinished()){
-    Serial.println("Game finished.");
-    return;
-  }else{
-    Serial.println("The game is not yet finished.");
-  }
   
   if(currentFlag->process()){
     // Success
@@ -68,7 +68,7 @@ void Game::flagCompleted(){
 }
 
 boolean Game::gameFinished(){
-  return _currentFlagId == FLAG_COUNT;
+  return _currentFlagId >= FLAG_COUNT;
 }
 
 void Game::flagFailed(){

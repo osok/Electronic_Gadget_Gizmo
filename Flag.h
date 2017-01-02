@@ -27,8 +27,11 @@ class Flag{
     void changeMaxFailedAttempts(int max);
     void addStage(int stageId, Stage* stage);
     int getFlagId();
+    int getFailedAttempts();
+    int getMaxFailedAttempts();
     void stageCompleted();
     void addFailedAttempt();
+    
 
   public:
     Flag();

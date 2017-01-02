@@ -20,7 +20,11 @@ Game _game;
 boolean wifiConnected = false;
 
 void setup() {
+  
   Serial.begin(115200);
+  
+  randomSeed(analogRead(0));
+  
   Serial.println("");
   Serial.println("");
   Serial.print("Booting");

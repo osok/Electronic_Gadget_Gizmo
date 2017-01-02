@@ -16,38 +16,20 @@ class Stage{
   private:
     int _flagId;
     int _stageId;
-    char _output[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
-    char _error[MAX_OUTPUT_LINES][MAX_OUTPUT_LINE_LENGTH];
-    char _input[MAX_OUTPUT_LINE_LENGTH];
-    int _outputCount = 0;
-    int _errorCount = 0;
-    char xxx[1000];
-
-    void resetOutput();
-    void resetError();
-
+ 
   protected:
-    void addOutput(char output[MAX_OUTPUT_LINE_LENGTH]);
-    void addError(char output[MAX_OUTPUT_LINE_LENGTH]);
     int getFlagId();
-    int getErrorCount();
     
   public:
     Stage();  
     int getStageId();
     void setFlagId(int flagId);
     void setStageId(int stageId);
-    char* getOutput(int line);
-    char* getError(int line);
-    boolean doesOutputExist();
-    boolean doesErrorExist();
-    int getOutputLineCount();
-    int getErrorLineCount();
-    void setInput(char* input);
 
     // Must be implemented by implementation class
-    void virtual setup(){};
-    boolean virtual process(){};
+    virtual void  setup(){};
+    virtual boolean  process(){};
+    virtual char*  getTitle(){};
     
 
 };

@@ -20,6 +20,12 @@ void Flag::setFlagId(int flagId){
   _flagId = flagId;
 }
 
+int Flag::getFailedAttempts(){
+  return _failedAttempts;
+}
+int Flag::getMaxFailedAttempts(){
+  return _failedAttemptMax;
+}
 
 boolean Flag::process(){
   Stage* currentStage;
@@ -37,16 +43,23 @@ boolean Flag::process(){
 
     Serial.println("Getting current stage..");
     currentStage = getCurrentStage();
+    
     Serial.println("Got current stage..");
     currentStage->setup();
-    
-    Serial.println("Painting Screen...");
-    printAddress("In Flag.process() Method",getBox()); 
 
-    getBox()->paintScreen(true); //show Title Screen
-    delay(TITLE_SCREEN_SHOW_SECONDS * 1000);
-
+    // Set the rest of the title screen up
+    getBox()->setTitle(currentStage->getTitle());
+    getBox()->setAttempts(getFailedAttempts(), getMaxFailedAttempts());
     getBox()->setCurrentFlag(getFlagId(), currentStage->getStageId());
+    getBox()->setCommand("Press any button");  
+   
+    Serial.println("Painting Screen...");
+    getBox()->paintScreen(true); //show Title Screen
+
+    // Wait for user to press any button
+    int button = getBox()->getButton();
+    Serial.print("Button pressed = ");
+    Serial.println(button);
 
     if(currentStage->process()){
       Serial.println("stage completed.");

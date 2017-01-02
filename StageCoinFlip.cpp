@@ -15,24 +15,17 @@
 
 StageCoinFlip::StageCoinFlip(){}
 
+char* StageCoinFlip::getTitle(){
+  return "Coin Flip";
+}
+
 void StageCoinFlip::setup(){
-  char title[MAX_OUTPUT_LINE_LENGTH+1];
-  char command[MAX_OUTPUT_LINE_LENGTH+1];
-  
   Serial.print("Stage StageCoinFlip  setup, stageId = ");
   Serial.println(getStageId());
   
   printAddress("In StageCoinFlip.setup() Method",getBox()); 
 
-  Box* box = getBox();
-  Serial.print("Address of box = ");
-  Serial.println(uint32_t(box), DEC);
-  box->setTitle("Coin Flip");
-  box->setAttempts(getErrorCount());
-  box->setCommand("Press any button");
- 
 }
-
 
 
 boolean StageCoinFlip::process(){
@@ -40,29 +33,47 @@ boolean StageCoinFlip::process(){
   Serial.println(getStageId());
 
   int num = random(1,3);  //pick 1 or 2
+  Serial.print("  Random number = ");
+  Serial.println(num);
 
   int guess = -1;
   Box* box = getBox();
+  box->clearOutput();
+  box->writeOutput("A=Heads, B=Tails", "Heads or Tails?");
+  boolean done = false;
+  boolean success = false;
+  boolean useButtons[] = {true,true,false,false,false,false};
+  char* labels[] = {"Heads","Tails","C","D","E","K"};
   
-  while(guess < 0 && guess > 1){
+  while( !done ){
+
+    box->updateStatus("");
+    box->clearUserInput();
     box->paintScreen(false); // Show Stage Screen
-    guess = box->getButton();
+    
+    guess = box->getButton(useButtons, labels);
+    Serial.print("Guess  = ");
+    Serial.println(guess);
+
     if((guess + 1)==num){
       //Correct
-      Serial.println("Correct!");
       box->updateStatus("Correct!");
       box->paintScreen(false);
       delay(5000);
-      return true;
+      done = true;
+      success = true;
     }else{
       //Incorrect
-      Serial.println("Incorrect :-(");
       box->updateStatus("Incorrect :-(");
       box->paintScreen(false);
       delay(5000);
-      return false;
+      done = true;
+      success = false;
     }
   }
+  Serial.print("Stage StageCoinFlip process is complete, stageId = ");
+  Serial.println(getStageId());
+  return success;
   
 }
 

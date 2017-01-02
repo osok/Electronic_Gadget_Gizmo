@@ -12,11 +12,11 @@ Box  _box;
 
 
 void printAddress(char* description, void *ptr){
-  Serial.print("*****  ");
-  Serial.print(description);
-  Serial.print(" = [");
-  Serial.print(uint32_t(ptr), DEC);
-  Serial.println("]  *****");
+//  Serial.print("*****  ");
+//  Serial.print(description);
+//  Serial.print(" = [");
+//  Serial.print(uint32_t(ptr), DEC);
+//  Serial.println("]  *****");
 }
 
 Box* getBox(){
