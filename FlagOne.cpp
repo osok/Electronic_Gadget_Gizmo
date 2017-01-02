@@ -14,6 +14,8 @@
 
 #define FLAGONE_MAX_FAILED_ATTEMPTS 10
 
+FlagOne::FlagOne(){}
+
 void FlagOne::setup(){
   Serial.print("Flag setup, flagId = ");
   Serial.println(getFlagId());

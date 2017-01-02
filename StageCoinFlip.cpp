@@ -13,6 +13,8 @@
 
 #include "StageCoinFlip.h"
 
+StageCoinFlip::StageCoinFlip(){}
+
 void StageCoinFlip::setup(){
   char title[MAX_OUTPUT_LINE_LENGTH+1];
   char command[MAX_OUTPUT_LINE_LENGTH+1];

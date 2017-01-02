@@ -11,17 +11,17 @@
 #include <Arduino.h>
 #include "Global.h"
 #include "Box.h"
-#include "Flag.h"
+#include "FlagOne.h"
 
  
 class Game{
   private:
     Flag* _flags[FLAG_COUNT];
-//    FlagOne flag1;
-//    FlagOne flag2;
-//    FlagOne flag3;
-//    FlagOne flag4;
-//    FlagOne flag5;
+    FlagOne flag1;
+    FlagOne flag2;
+    FlagOne flag3;
+    FlagOne flag4;
+    FlagOne flag5;
 
     int _currentFlagId = 0;
     char xxx[1000];

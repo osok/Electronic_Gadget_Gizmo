@@ -6,7 +6,6 @@
  */
 
 #include "Game.h"
-#include "FlagOne.h"
 
 
 
@@ -16,15 +15,16 @@ void Game::setup(){
   Serial.println("Game is setting up...");
 
   FlagOne* flag;
-  NEW(flag,FlagOne)(); 
-  addFlag(FLAG_ONE, flag);
-  printAddress("In Game.setup() flag = ",flag);
+//  NEW(flag,FlagOne)(); 
+//  addFlag(FLAG_ONE, flag);
+//  printAddress("In Game.setup() flag = ",flag);
 
   
-//  addFlag(FLAG_TWO, &flag2);
-//  addFlag(FLAG_THREE, &flag3);
-//  addFlag(FLAG_FOUR, &flag4);
-//  addFlag(FLAG_FIVE, &flag5);
+  addFlag(FLAG_ONE, &flag1);
+  addFlag(FLAG_TWO, &flag2);
+  addFlag(FLAG_THREE, &flag3);
+  addFlag(FLAG_FOUR, &flag4);
+  addFlag(FLAG_FIVE, &flag5);
 }
 
 void Game::run(){
