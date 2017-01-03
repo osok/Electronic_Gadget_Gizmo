@@ -53,3 +53,38 @@ void wait(int seconds){
   Serial.println("");
   
 }
+
+
+
+/**
+ * Copied from: http://www.programmingsimplified.com/c/source-code/c-program-sort-string
+ * 
+ */
+void sortString(char *s){
+   int c, d = 0, length;
+   char *pointer, *result, ch;
+ 
+   length = strlen(s);
+ 
+   result = (char*)malloc(length+1);
+ 
+   pointer = s;
+ 
+   for ( ch = 'A' ; ch <= 'Z' ; ch++ )
+   {
+      for ( c = 0 ; c < length ; c++ )
+      {
+         if ( *pointer == ch )
+         {
+            *(result+d) = *pointer;
+            d++;
+         }
+         pointer++;
+      }
+      pointer = s;
+   }
+   *(result+d) = '\0';
+ 
+   strcpy(s, result);
+   free(result);
+}

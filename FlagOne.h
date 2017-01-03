@@ -13,6 +13,8 @@
 #include <Arduino.h>
 #include "Flag.h"
 #include "StageCoinFlip.h"
+#include "StageGuessButton.h"
+#include "StageGuessNumber.h"
 
 class FlagOne: public Flag{
 
@@ -21,9 +23,9 @@ class FlagOne: public Flag{
      *  they should always be reference from the Flags stages
      *  pointer array.
      */
-    StageCoinFlip coinFlipStage1;
-    StageCoinFlip coinFlipStage2;
-    StageCoinFlip coinFlipStage3;
+    StageCoinFlip stage1;
+    StageGuessButton stage2;
+    StageGuessNumber stage3;
 
   public:
     FlagOne();  

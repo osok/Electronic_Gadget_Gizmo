@@ -22,9 +22,9 @@ void FlagOne::setup(){
 
   printAddress("In FlagOne.setup() Method",getBox()); 
 
-  addStage(STAGE_ID_ONE, &coinFlipStage1); 
-  addStage(STAGE_ID_TWO, &coinFlipStage2); 
-  addStage(STAGE_ID_THREE, &coinFlipStage3); 
+  addStage(STAGE_ID_ONE, &stage1); 
+  addStage(STAGE_ID_TWO, &stage2); 
+  addStage(STAGE_ID_THREE, &stage3); 
   
   changeMaxFailedAttempts(FLAGONE_MAX_FAILED_ATTEMPTS);
 

@@ -40,7 +40,7 @@
 
 #define MAX_OUTPUT_LINE_LENGTH 20
 
-#define STATUS_TIME_LEFT "Seconds Left: "
+
 
 
 class Box{
@@ -86,9 +86,10 @@ class Box{
     void writeOutput(char* line1, char* line2);
     void updateStatus(char* line);
 
-    byte getButtons(int seconds);
-    int getButton(boolean useButtons[6], char* labels[6]);
+    byte getButtons(int seconds, int maxButtonsPressed);
+    byte getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], char* labels[6]);
     int getButton();
+    int getButton(boolean useButtons[6], char* labels[6]);
 
     void paintScreen(boolean titleScreen);
     

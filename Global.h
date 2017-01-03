@@ -34,6 +34,8 @@ void printAddress(char* description, void* ptr);
 char* getRandomString(int length);
 int getRandomNumber(int lower, int upper);
 void wait(int seconds);
+void sortString(char *s);
+
 
 #endif
 

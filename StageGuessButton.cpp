@@ -1,46 +1,48 @@
 /**
- * StageCoinFlip.cpp - This is the first stage of the first flag.
- * It is a simple game which the user selects button A or Button B.
+ * StageGuessButton.h - This is the second stage of the first flag.
+ * It is a simple game which the user selects a button A, B, C, D or E.
  * The computer then comapres its pick against the players pick.
- * 50:50 likelihood that they win.  
+ * 20% likelihood that they win.  
  * 
  * Flag     : 1
- * Stage    : 1
+ * Stage    : 2
  * 
  * Created by osok
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
 
-#include "StageCoinFlip.h"
+#include "StageGuessButton.h"
 
-StageCoinFlip::StageCoinFlip(){}
+StageGuessButton::StageGuessButton(){}
 
-char* StageCoinFlip::getTitle(){
-  return "Coin Flip";
+char* StageGuessButton::getTitle(){
+  return "Button Guess";
 }
 
-void StageCoinFlip::setup(){
-  Serial.print("Stage StageCoinFlip  setup, stageId = ");
+void StageGuessButton::setup(){
+  Serial.print("Stage StageGuessButton  setup, stageId = ");
   Serial.println(getStageId());
+  
+
 }
 
 
-boolean StageCoinFlip::process(){
-  Serial.print("Stage StageCoinFlip  process, stageId = ");
+boolean StageGuessButton::process(){
+  Serial.print("Stage StageGuessButton  process, stageId = ");
   Serial.println(getStageId());
 
-  int num = random(1,3);  //pick 1 or 2
+  int num = random(1,6);  //pick 1 - 5
   Serial.print("  Random number = ");
   Serial.println(num);
 
   int guess = -1;
   Box* box = getBox();
   box->clearOutput();
-  box->writeOutput("A=Heads, B=Tails", "Heads or Tails?");
+  box->writeOutput("Can you guess, which", "button A-E to press?");
   boolean done = false;
   boolean success = false;
-  boolean useButtons[] = {true,true,false,false,false,false};
-  char* labels[] = {"Heads","Tails","C","D","E","K"};
+  boolean useButtons[] = {true,true,true,true,true,false};
+  char* labels[] = {"A","B","C","D","E","K"};
   
   while( !done ){
 
@@ -52,7 +54,7 @@ boolean StageCoinFlip::process(){
     Serial.print("Guess  = ");
     Serial.println(guess);
 
-    if((guess + 1)==num){
+     if((guess + 1)==num){
       //Correct
       box->updateStatus("Correct!");
       box->paintScreen(false);
@@ -67,8 +69,10 @@ boolean StageCoinFlip::process(){
       done = true;
       success = false;
     }
+
+
   }
-  Serial.print("Stage StageCoinFlip process is complete, stageId = ");
+  Serial.print("Stage StageGuessButton process is complete, stageId = ");
   Serial.println(getStageId());
   return success;
   
