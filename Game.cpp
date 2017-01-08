@@ -14,22 +14,18 @@ Game::Game(){}
 void Game::setup(){
   Serial.println("Game is setting up...");
 
-  FlagOne* flag;
-//  NEW(flag,FlagOne)(); 
-//  addFlag(FLAG_ONE, flag);
-//  printAddress("In Game.setup() flag = ",flag);
-
-  
   addFlag(FLAG_ONE, &flag1);
   addFlag(FLAG_TWO, &flag2);
   addFlag(FLAG_THREE, &flag3);
   addFlag(FLAG_FOUR, &flag4);
   addFlag(FLAG_FIVE, &flag5);
+
+  _webServer.setup();
 }
 
 void Game::run(){
   Serial.println("Game is starting...");
-  printAddress("In Game.run() Method",getBox()); 
+
 
   if(gameFinished()){
     Serial.println("Game finished.");
@@ -38,6 +34,8 @@ void Game::run(){
   }else{
     Serial.println("The game is not yet finished.");
   }
+
+  _webServer.run();
 
   Flag* currentFlag;
   currentFlag = getCurrentFlag();
@@ -60,6 +58,8 @@ void Game::run(){
     // Failed
     flagFailed();
   }
+
+  
   
 }
 

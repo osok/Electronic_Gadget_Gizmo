@@ -12,6 +12,14 @@
 
 #include <Arduino.h>
 
+#include "GameWifi.h"
+
+
+#define DISPLAY_INFORMATION 0
+#define DISPLAY_TITLE_SCREEN 1
+#define DISPLAY_USER_SCREEN 2
+#define DISPLAY_FLAG 3
+
 // The defines here cannot go into global because there would be a circular reference
 
 //GPIO Pins, this might need to change to actual pin number
@@ -45,10 +53,9 @@
 
 class Box{
   private:
-
+    
     int _currentOutPutLine = 0;
     
-
     char _title[MAX_OUTPUT_LINE_LENGTH+1];
     char _currentFlag[MAX_OUTPUT_LINE_LENGTH+1];
     char _attempts[MAX_OUTPUT_LINE_LENGTH+1];
@@ -59,10 +66,14 @@ class Box{
     char _status[MAX_OUTPUT_LINE_LENGTH+1];
     char _userInput[MAX_OUTPUT_LINE_LENGTH+1];
 
+    char _information1[MAX_OUTPUT_LINE_LENGTH+1];
+    char _information2[MAX_OUTPUT_LINE_LENGTH+1];
+    char _information3[MAX_OUTPUT_LINE_LENGTH+1];
+    char _information4[MAX_OUTPUT_LINE_LENGTH+1];
+
     char _EMPTY[MAX_OUTPUT_LINE_LENGTH+1];
     char _SEIRAL_BOUNDRY[MAX_OUTPUT_LINE_LENGTH+1];
 
-    char xxx[1000];
     void printAddresses();
 
   protected:
@@ -73,6 +84,7 @@ class Box{
 
     void setup();
     char* initBuffer(char* buffer, char c);
+    char* initBuffer(char* buffer, char c, int len);
     char* initAndCopyString(char* buffer, char* string, int max);
     char* getBlankLine();
     
@@ -86,12 +98,22 @@ class Box{
     void writeOutput(char* line1, char* line2);
     void updateStatus(char* line);
 
+    void updateInformation(char* line1);
+    void updateInformation(char* line1, char* line2);
+    void updateInformation(char* line1, char* line2, char* line3);
+    void updateInformation(char* line1, char* line2, char* line3, char* line4);
+
     byte getButtons(int seconds, int maxButtonsPressed);
     byte getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], char* labels[6]);
     int getButton();
     int getButton(boolean useButtons[6], char* labels[6]);
 
-    void paintScreen(boolean titleScreen);
+    void paintScreen(int screenType);
+    void paintScreen(int screenType, boolean clearFirst);
+    
+    char* getDateTimeStr();
+
+    boolean isWifiConnected();
     
 };
 

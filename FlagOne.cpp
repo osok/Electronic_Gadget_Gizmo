@@ -17,8 +17,8 @@
 FlagOne::FlagOne(){}
 
 void FlagOne::setup(){
-  Serial.print("Flag setup, flagId = ");
-  Serial.println(getFlagId());
+//  Serial.print("Flag setup, flagId = ");
+//  Serial.println(getFlagId());
 
   printAddress("In FlagOne.setup() Method",getBox()); 
 
@@ -28,7 +28,7 @@ void FlagOne::setup(){
   
   changeMaxFailedAttempts(FLAGONE_MAX_FAILED_ATTEMPTS);
 
-  Serial.println("Flag setup complete.");
+//  Serial.println("Flag setup complete.");
   
 }
 

@@ -20,18 +20,22 @@ char* StageCoinFlip::getTitle(){
 }
 
 void StageCoinFlip::setup(){
-  Serial.print("Stage StageCoinFlip  setup, stageId = ");
-  Serial.println(getStageId());
+//  Serial.print("Stage StageCoinFlip  setup, stageId = ");
+//  Serial.println(getStageId());
+  if(!isInitialized()){
+    coinSide = random(1,3);  //pick 1 or 2
+  }
+  initialized();
+
 }
 
 
 boolean StageCoinFlip::process(){
-  Serial.print("Stage StageCoinFlip  process, stageId = ");
-  Serial.println(getStageId());
-
-  int num = random(1,3);  //pick 1 or 2
-  Serial.print("  Random number = ");
-  Serial.println(num);
+//  Serial.print("Stage StageCoinFlip  process, stageId = ");
+//  Serial.println(getStageId());
+//
+//  Serial.print("  Random number = ");
+//  Serial.println(coinSide);
 
   int guess = -1;
   Box* box = getBox();
@@ -46,30 +50,30 @@ boolean StageCoinFlip::process(){
 
     box->updateStatus("");
     box->clearUserInput();
-    box->paintScreen(false); // Show Stage Screen
+    box->paintScreen(DISPLAY_USER_SCREEN); // Show User Screen
     
     guess = box->getButton(useButtons, labels);
-    Serial.print("Guess  = ");
-    Serial.println(guess);
+//    Serial.print("Guess  = ");
+//    Serial.println(guess);
 
-    if((guess + 1)==num){
+    if((guess + 1)==coinSide){
       //Correct
       box->updateStatus("Correct!");
-      box->paintScreen(false);
+      box->paintScreen(DISPLAY_USER_SCREEN);
       delay(3000);
       done = true;
       success = true;
     }else{
       //Incorrect
-      box->updateStatus("Incorrect :-(");
-      box->paintScreen(false);
+      box->updateStatus("Incorrect...");
+      box->paintScreen(DISPLAY_USER_SCREEN);
       delay(3000);
       done = true;
       success = false;
     }
   }
-  Serial.print("Stage StageCoinFlip process is complete, stageId = ");
-  Serial.println(getStageId());
+//  Serial.print("Stage StageCoinFlip process is complete, stageId = ");
+//  Serial.println(getStageId());
   return success;
   
 }

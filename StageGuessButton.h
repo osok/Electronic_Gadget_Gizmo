@@ -21,7 +21,7 @@
 class StageGuessButton: public Stage{
   private:
     boolean _outcome;
-    
+    int buttonNumber = 0;
 
   public:
     StageGuessButton();

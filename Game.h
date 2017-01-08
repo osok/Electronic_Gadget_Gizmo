@@ -11,6 +11,7 @@
 #include <Arduino.h>
 #include "Global.h"
 #include "Box.h"
+#include "WebServer.h"
 #include "FlagOne.h"
 
  
@@ -22,6 +23,7 @@ class Game{
     FlagOne flag3;
     FlagOne flag4;
     FlagOne flag5;
+    WebServer _webServer;
 
     int _currentFlagId = 0;
     boolean gameFinished();
@@ -29,6 +31,8 @@ class Game{
     void flagCompleted();
     void flagFailed();
     Flag* getCurrentFlag();
+
+    
            
   public:
     Game();

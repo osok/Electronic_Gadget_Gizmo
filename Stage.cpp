@@ -30,6 +30,11 @@ void Stage::setStageId(int stageId){
    _stageId = stageId;
 }
 
+void Stage::initialized(){
+  _initialized = true;
+}
 
-
+boolean Stage::isInitialized(){
+  return _initialized;
+}
 

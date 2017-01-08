@@ -11,12 +11,12 @@ void Flag::setup(){
 }
 
 Flag::Flag(){
-  Serial.print("Flag created");
+//  Serial.print("Flag created");
 }
 
 void Flag::setFlagId(int flagId){
-  Serial.print("Flag setFlagId,  flagId = ");
-  Serial.println(getFlagId());
+//  Serial.print("Flag setFlagId,  flagId = ");
+//  Serial.println(getFlagId());
   _flagId = flagId;
 }
 
@@ -29,22 +29,22 @@ int Flag::getMaxFailedAttempts(){
 
 boolean Flag::process(){
   Stage* currentStage;
-  Serial.print("Flag process started, flagId = ");
-  Serial.println(getFlagId());
+//  Serial.print("Flag process started, flagId = ");
+//  Serial.println(getFlagId());
 
   while(!allStagesComplete()){
 
-    Serial.println("All stages are not yet completed.");
+//    Serial.println("All stages are not yet completed.");
     
     if(tooManyFailedAttempts()){
-      Serial.println("Too many failed attempts.");
+//      Serial.println("Too many failed attempts.");
       return false;
     }
 
-    Serial.println("Getting current stage..");
+//    Serial.println("Getting current stage..");
     currentStage = getCurrentStage();
     
-    Serial.println("Got current stage..");
+//    Serial.println("Got current stage..");
     currentStage->setup();
 
     // Set the rest of the title screen up
@@ -53,24 +53,24 @@ boolean Flag::process(){
     getBox()->setCurrentFlag(getFlagId(), currentStage->getStageId());
     getBox()->setCommand("Press any button");  
    
-    Serial.println("Painting Screen...");
-    getBox()->paintScreen(true); //show Title Screen
+//    Serial.println("Painting Screen...");
+    getBox()->paintScreen(DISPLAY_TITLE_SCREEN); //show Title Screen
 
     // Wait for user to press any button
     int button = getBox()->getButton();
-    Serial.print("Button pressed = ");
-    Serial.println(button);
+//    Serial.print("Button pressed = ");
+//    Serial.println(button);
 
     if(currentStage->process()){
-      Serial.println("stage completed.");
+//      Serial.println("stage completed.");
       stageCompleted();
     }else{
-      Serial.println("stage failed.");
+//      Serial.println("stage failed.");
       addFailedAttempt();
     }
   }
-  Serial.print("Flag process complete, flagId = ");
-  Serial.println(getFlagId());
+//  Serial.print("Flag process complete, flagId = ");
+//  Serial.println(getFlagId());
 
   return true;
   
@@ -103,10 +103,10 @@ void Flag::changeMaxFailedAttempts(int max){
 
 void Flag::addStage(int stageId, Stage* stage){
   if(stageId >= 0 && stageId < MAX_STAGE_COUNT){
-    Serial.print("Adding a Stage, flagId = ");
-    Serial.print(getFlagId());
-    Serial.print(", stageId = ");
-    Serial.println(stageId);
+//    Serial.print("Adding a Stage, flagId = ");
+//    Serial.print(getFlagId());
+//    Serial.print(", stageId = ");
+//    Serial.println(stageId);
     
     stage->setFlagId(getFlagId());
     stage->setStageId(stageId);
@@ -130,10 +130,10 @@ void Flag::stageCompleted(){
 }
 
 boolean Flag::allStagesComplete(){
-    Serial.print("  currentStage = ");
-    Serial.println(_currentStage);
-    Serial.print("  MAX_STAGE_COUNT = ");
-    Serial.println(MAX_STAGE_COUNT);
+//    Serial.print("  currentStage = ");
+//    Serial.println(_currentStage);
+//    Serial.print("  MAX_STAGE_COUNT = ");
+//    Serial.println(MAX_STAGE_COUNT);
   return _currentStage >= MAX_STAGE_COUNT;
 }
 
@@ -148,10 +148,10 @@ char* Flag::getFlagString(){
 
 void Flag::setCurrentStageId(int stageId){
   if(stageId >= 0 && stageId < MAX_STAGE_COUNT){
-    Serial.print("Setting the current stageId, flagId = ");
-    Serial.println(getFlagId());
-    Serial.print(", stageId = ");
-    Serial.println(stageId);
+//    Serial.print("Setting the current stageId, flagId = ");
+//    Serial.println(getFlagId());
+//    Serial.print(", stageId = ");
+//    Serial.println(stageId);
     _currentStage = stageId;
   }
 

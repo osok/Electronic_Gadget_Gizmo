@@ -15,25 +15,28 @@
 
 StageGuessButton::StageGuessButton(){}
 
+
 char* StageGuessButton::getTitle(){
   return "Button Guess";
 }
 
 void StageGuessButton::setup(){
-  Serial.print("Stage StageGuessButton  setup, stageId = ");
-  Serial.println(getStageId());
-  
+//  Serial.print("Stage StageGuessButton  setup, stageId = ");
+//  Serial.println(getStageId());
+  if(!isInitialized()){
+    buttonNumber = random(1,6);  //pick 1 - 5
+  }
+  initialized();
 
 }
 
 
 boolean StageGuessButton::process(){
-  Serial.print("Stage StageGuessButton  process, stageId = ");
-  Serial.println(getStageId());
-
-  int num = random(1,6);  //pick 1 - 5
-  Serial.print("  Random number = ");
-  Serial.println(num);
+//  Serial.print("Stage StageGuessButton  process, stageId = ");
+//  Serial.println(getStageId());
+//
+//  Serial.print("  Random number = ");
+//  Serial.println(buttonNumber);
 
   int guess = -1;
   Box* box = getBox();
@@ -48,23 +51,23 @@ boolean StageGuessButton::process(){
 
     box->updateStatus("");
     box->clearUserInput();
-    box->paintScreen(false); // Show Stage Screen
+    box->paintScreen(DISPLAY_USER_SCREEN); // Show Stage Screen
     
     guess = box->getButton(useButtons, labels);
-    Serial.print("Guess  = ");
-    Serial.println(guess);
+//    Serial.print("Guess  = ");
+//    Serial.println(guess);
 
-     if((guess + 1)==num){
+     if((guess + 1)==buttonNumber){
       //Correct
       box->updateStatus("Correct!");
-      box->paintScreen(false);
+      box->paintScreen(DISPLAY_USER_SCREEN);
       delay(3000);
       done = true;
       success = true;
     }else{
       //Incorrect
-      box->updateStatus("Incorrect :-(");
-      box->paintScreen(false);
+      box->updateStatus("Incorrect...");
+      box->paintScreen(DISPLAY_USER_SCREEN);
       delay(3000);
       done = true;
       success = false;
@@ -72,8 +75,8 @@ boolean StageGuessButton::process(){
 
 
   }
-  Serial.print("Stage StageGuessButton process is complete, stageId = ");
-  Serial.println(getStageId());
+//  Serial.print("Stage StageGuessButton process is complete, stageId = ");
+//  Serial.println(getStageId());
   return success;
   
 }

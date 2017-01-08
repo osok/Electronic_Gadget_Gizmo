@@ -16,12 +16,16 @@ class Stage{
   private:
     int _flagId;
     int _stageId;
+    boolean _initialized = false;
+
  
   protected:
     int getFlagId();
+    void initialized();
     
   public:
     Stage();  
+    boolean isInitialized();
     int getStageId();
     void setFlagId(int flagId);
     void setStageId(int stageId);

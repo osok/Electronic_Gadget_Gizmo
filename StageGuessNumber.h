@@ -23,10 +23,12 @@
 #include "Stage.h"
 #include "Global.h"
 
+#define STAGE_TIME 5
+
 class StageGuessNumber: public Stage{
   private:
     boolean _outcome;
-    
+    int randomNumber = 0;
 
   public:
     StageGuessNumber();

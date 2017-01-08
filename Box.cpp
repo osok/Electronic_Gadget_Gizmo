@@ -1,3 +1,5 @@
+#include <LiquidCrystal_I2C.h>
+
 /**
  * Box.h - This represents the inputs and outputs of the Game Box.
  *          It will be mad available to each Stage in order for the 
@@ -10,18 +12,27 @@
  * github https://github.com/osok/Electronic_Gadget_Gizmo
  */
 
+
 #include "Box.h"
 #include "Global.h"
+//#include <Wire.h>         //I2C library
+//#include <RtcDS3231.h>    //RTC library
 
 
+LiquidCrystal_I2C lcd(0x27,20,4);
+//RtcDS3231<TwoWire> realTimeClock(Wire);
+GameWifi _gameWifi;
 
-Box::Box(){
-  Serial.println("Box interface object created");
-  setup();
-}
+Box::Box(){}
 
 void Box::setup(){
   Serial.println("Box interface object setup");
+
+  lcd.init();
+  lcd.begin(20,4,LCD_5x8DOTS);
+  lcd.backlight();
+  lcd.noCursor();
+  lcd.noBlink();
 
   initBuffer(_SEIRAL_BOUNDRY, '=');
   initBuffer(_EMPTY, ' ');
@@ -33,12 +44,24 @@ void Box::setup(){
   pinMode(BUTTON_3, INPUT);
   pinMode(BUTTON_4, INPUT);
   pinMode(BUTTON_5, INPUT);
+
+  _gameWifi.setup();
+
+  
+
+}
+
+boolean  Box::isWifiConnected(){
+  return _gameWifi.isWifiConnected();
 }
 
 char* Box::initBuffer(char* buffer, char c){
+  return initBuffer(buffer, c, MAX_OUTPUT_LINE_LENGTH);
+}
+char* Box::initBuffer(char* buffer, char c, int len){
 //  Serial.println("initBuffer");
   int i = 0;
-  for(; i < MAX_OUTPUT_LINE_LENGTH; i++){
+  for(; i < len; i++){
     buffer[i] = c;
   }
   buffer[i] = '\0';
@@ -152,29 +175,106 @@ void Box::clearUserInput(){
   updateUserInput("");
 }
 
-void Box::paintScreen(boolean titleScreen){
+void Box::updateInformation(char* line1){
+  updateInformation(line1, "", "", "");
+}
+void Box::updateInformation(char* line1, char* line2){
+  updateInformation(line1, line2, "", "");
+}
+void Box::updateInformation(char* line1, char* line2, char* line3){
+  updateInformation(line1, line2, line3, "");
+}
+void Box::updateInformation(char* line1, char* line2, char* line3, char* line4){
+  if(strlen(line1) > 0 ){
+    Serial.println(line1);
+  }
+  if(strlen(line2) > 0 ){
+    Serial.println(line2);
+  }
+  if(strlen(line3) > 0 ){
+    Serial.println(line3);
+  }
+  if(strlen(line4) > 0 ){
+    Serial.println(line4);
+  }
+  initAndCopyString(_information1, line1, MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(_information2, line2, MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(_information3, line3, MAX_OUTPUT_LINE_LENGTH);
+  initAndCopyString(_information4, line4, MAX_OUTPUT_LINE_LENGTH);
+  paintScreen(DISPLAY_INFORMATION);
+}
+
+void paintLCD(char* line1, char* line2, char* line3, char* line4, boolean clearFirst){
+  lcd.backlight();
+  if(clearFirst){
+    lcd.clear();
+  }
+  lcd.home();
+  lcd.noCursor();
+  lcd.noBlink();
   
-  Serial.println("");
+  if(strlen(line1) > 0 ){
+    lcd.setCursor(0,0);
+    lcd.print(line1);
+  }
+  if(strlen(line2) > 0 ){
+    lcd.setCursor(0,1);
+    lcd.print(line2);
+  }
+  if(strlen(line3) > 0 ){
+    lcd.setCursor(0,2);
+    lcd.print(line3);
+  }
+  if(strlen(line4) > 0 ){
+    lcd.setCursor(0,3);
+    lcd.print(line4);
+  }
+
+}
+
+
+
+void Box::paintScreen(int screenType){
+  paintScreen(screenType, true);
+}
+void Box::paintScreen(int screenType, boolean clearFirst){
   
-  if(titleScreen){
-    Serial.println("Painting Title Screen");
-    Serial.println(_SEIRAL_BOUNDRY);
-    Serial.println(_title);
-    Serial.println(_currentFlag);
-    Serial.println(_attempts);
-    Serial.println(_commands);
-    Serial.println(_SEIRAL_BOUNDRY);
-  }else{
-    Serial.println("Painting User Screen");
-    Serial.println(_SEIRAL_BOUNDRY);
-    Serial.println(_output_1);
-    Serial.println(_output_2);
-    Serial.println(_status);
-    Serial.println(_userInput);
-    Serial.println(_SEIRAL_BOUNDRY);
+//  Serial.println("");
+
+  switch(screenType){
+     case DISPLAY_INFORMATION :
+      paintLCD(_information1,_information2,_information3,_information4, clearFirst);
+      break;
+  
+    case DISPLAY_TITLE_SCREEN :
+//      Serial.println("Painting Title Screen");
+//      Serial.println(_SEIRAL_BOUNDRY);
+//      Serial.println(_title);
+//      Serial.println(_currentFlag);
+//      Serial.println(_attempts);
+//      Serial.println(_commands);
+//      Serial.println(_SEIRAL_BOUNDRY);
+      paintLCD(_title,_currentFlag, _attempts, _commands, clearFirst);
+      break;
+  
+    case DISPLAY_USER_SCREEN :
+//      Serial.println("Painting User Screen");
+//      Serial.println(_SEIRAL_BOUNDRY);
+//      Serial.println(_output_1);
+//      Serial.println(_output_2);
+//      Serial.println(_status);
+//      Serial.println(_userInput);
+//      Serial.println(_SEIRAL_BOUNDRY);
+      paintLCD(_output_1,_output_2, _status, _userInput, clearFirst);
+      break;
+  
+    case DISPLAY_FLAG :
+      paintLCD("Congratulations you","Found a new flag","[Flag Goes here]","", clearFirst);
+      break;
+  
   }
   
-  Serial.println("");
+//  Serial.println("");
   
 }
 int Box::getButton(){
@@ -235,7 +335,7 @@ byte Box::getButtons(int seconds, int maxButtonsPressed){
 }
 
 byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], char* labels[6]){
-  Serial.println("getButtons called");
+//  Serial.println("getButtons called");
 
   if(seconds > 999){
     seconds = 999;
@@ -244,15 +344,15 @@ byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], 
     seconds = 0;
   }
   
-  Serial.print("seconds = ");
-  Serial.println(seconds);
+//  Serial.print("seconds = ");
+//  Serial.println(seconds);
 
   byte val = 0;
   unsigned long  endTime = millis() + (seconds * 1000);
-  Serial.print("End Time = ");
-  Serial.println(endTime);
-  Serial.print("Current Time = ");
-  Serial.println( millis());
+//  Serial.print("End Time = ");
+//  Serial.println(endTime);
+//  Serial.print("Current Time = ");
+//  Serial.println( millis());
   
   char secondsStringBuf[5];
   
@@ -270,7 +370,7 @@ byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], 
   strcat(statusBuffer, "s left to select");
   updateStatus(statusBuffer);
 
-  paintScreen(false);
+  paintScreen(DISPLAY_USER_SCREEN);
  
   int bit = 0;
   boolean pressed[] = {false,false,false,false,false,false};
@@ -311,18 +411,18 @@ byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], 
       val += 32;
     }
 
-    Serial.print("Current Val = ");
-    Serial.println(val);
-
-    Serial.print("Pressed Array = ");
-    for(int i=0; i<6;i++){
-      if(pressed[i]){
-        Serial.print("Y");
-      }else{
-        Serial.print("N");
-      }
-    }
-    Serial.println("");
+//    Serial.print("Current Val = ");
+//    Serial.println(val);
+//
+//    Serial.print("Pressed Array = ");
+//    for(int i=0; i<6;i++){
+//      if(pressed[i]){
+//        Serial.print("Y");
+//      }else{
+//        Serial.print("N");
+//      }
+//    }
+//    Serial.println("");
 
 
 
@@ -339,9 +439,9 @@ byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], 
     //
     sortString(userInputBuffer);
     updateUserInput(userInputBuffer);
-    Serial.print("Current UserInput = ");
-    Serial.println(userInputBuffer);
-    
+//    Serial.print("Current UserInput = ");
+//    Serial.println(userInputBuffer);
+//    
      
      //
     // Caculate seconds left
@@ -355,11 +455,29 @@ byte Box::getButtons(int seconds, int maxButtonsPressed, boolean useButtons[6], 
     initAndCopyString(statusBuffer, secondsStringBuf, MAX_OUTPUT_LINE_LENGTH);
     strcat(statusBuffer, "s left to select");
     updateStatus(statusBuffer);
-    paintScreen(false);
-    delay(500);
+    paintScreen(DISPLAY_USER_SCREEN, false);
+    delay(250);
   }
 
   return val;
 
+}
+
+
+char* Box::getDateTimeStr(){
+  char str[18];   //declare a string as an array of chars  
+//  RtcDateTime currentTime = realTimeClock.GetDateTime();
+//  
+//  initBuffer(str, '\0', 18);
+//  
+//  sprintf(str, "%d/%d/%d %d:%d:%d",    
+//                  currentTime.Year(),                    
+//                  currentTime.Month(),                
+//                  currentTime.Day(),                  
+//                  currentTime.Hour(),                 
+//                  currentTime.Minute(),             
+//                  currentTime.Second());
+//  
+  return str; 
 }
 

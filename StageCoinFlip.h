@@ -21,7 +21,8 @@
 class StageCoinFlip: public Stage{
   private:
     boolean _outcome;
-    
+    int coinSide = 0;
+
 
   public:
     StageCoinFlip();

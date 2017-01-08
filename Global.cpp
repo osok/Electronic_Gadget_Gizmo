@@ -6,10 +6,11 @@ const char* characterSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 //
 // GLOBAL VARIABLES ARE BAD JU-JU
-// But so are pointer references that keep moving (don't ask)
+// So we sill limit them to only objects 
+// that need to be referenced by nearly every other object
 //
 Box  _box;
-
+Config _config;
 
 void printAddress(char* description, void *ptr){
 //  Serial.print("*****  ");
@@ -24,6 +25,9 @@ Box* getBox(){
   return &_box;
 }
 
+Config* getConfig(){
+  return &_config;
+}
 
 char* getRandomString(int length){
   char buffer[length+1];

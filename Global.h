@@ -9,6 +9,7 @@
 #define Global_h
 
 #include "Box.h"
+#include "Config.h"
 
 #define FLAG_ONE 0
 #define FLAG_TWO 1
@@ -28,8 +29,9 @@
 #define NEW(x,y) *(x=(y*)malloc(sizeof(y)))=y
 
 Box* getBox();
-void printAddress(char* description, void* ptr);
+Config* getConfig();
 
+void printAddress(char* description, void* ptr);
 
 char* getRandomString(int length);
 int getRandomNumber(int lower, int upper);
