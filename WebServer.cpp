@@ -142,7 +142,7 @@ void handleFileList() {
 void WebServer::debugOutputFilesOnServer(){
   DBG_OUTPUT_PORT.print("\n");
   DBG_OUTPUT_PORT.setDebugOutput(true);
-  SPIFFS.begin();
+  
   {
     Dir dir = SPIFFS.openDir("/");
     while (dir.next()) {    
@@ -205,17 +205,12 @@ void WebServer::stopServer(){
   _serverRunning = false;
 }
 
-void WebServer::restartServer(){
-  _serverRunning = true;
-}
 
 void WebServer::run(){
   Serial.println("WebServer is running");
-  while(1){
-    while(_serverRunning){
-      _server.handleClient();
-      yield();
-    }
+  _serverRunning = true;
+  while(_serverRunning){
+    _server.handleClient();
     yield();
   }
 }

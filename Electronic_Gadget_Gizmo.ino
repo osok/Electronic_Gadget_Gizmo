@@ -1,7 +1,7 @@
 
 #include "Global.h"
 #include "Game.h"
-
+#include <FS.h>
 
 
 
@@ -16,6 +16,7 @@ void setup() {
   Serial.println("Booting");
 
   randomSeed(analogRead(0));
+  SPIFFS.begin();
   
   getConfig()->setup();
   getBox()->setup();

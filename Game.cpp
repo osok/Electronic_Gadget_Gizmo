@@ -35,6 +35,8 @@ void Game::run(){
     Serial.println("The game is not yet finished.");
   }
 
+  // Will only run this at the VERY start of the game, 
+  // then again only as needed from inside stages.
   _webServer.run();
 
   Flag* currentFlag;
